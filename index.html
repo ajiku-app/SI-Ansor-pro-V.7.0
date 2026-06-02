@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Presensi-ANSOR PRO V.70 Enterprise | Dashboard Analisis Kehadiran</title>
-   
+    <title>PRESENSI-ANSOR PRO Enterprise</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Plus Jakarta Sans, Great Vibes (untuk Kaligrafi Sertifikat), & Cinzel -->
@@ -61,7 +61,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #F5F7FA;
         }
-        /* SISTEM TIPOGRAFI TERPADU (SI-ANSOR PRO UNIFIED TYPOGRAPHY v7.1) */
+        /* SISTEM TIPOGRAFI TERPADU (PRESENSI-ANSOR PRO UNIFIED TYPOGRAPHY v7.1) */
         body, input, select, textarea, button, p, span, h1, h2, h3, h4, h5, h6, label {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
@@ -304,7 +304,7 @@
                 </div>
             </div>
             <div>
-                <h2 class="text-xl font-extrabold uppercase tracking-widest text-white">SI-ANSOR PRO v7.0</h2>
+                <h2 class="text-xl font-extrabold uppercase tracking-widest text-white">PRESENSI-ANSOR PRO v7.0</h2>
                 <p class="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mt-1">Sistem Informasi Kaderisasi & Kehadiran</p>
             </div>
 
@@ -383,11 +383,11 @@
             </button>
             <button onclick="switchTab('tab-tim')" id="side-btn-tim" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-150 group text-slate-400 hover:bg-navy-800/50 hover:text-white">
                 <i data-lucide="shield-check" class="w-4.5 h-4.5 text-slate-400 group-hover:text-emerald-500"></i>
-                <span>Manajemen User</span>
+                <span>Manajemen Tim</span>
             </button>
             <button onclick="switchTab('tab-custom')" id="side-btn-custom" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-150 group text-slate-400 hover:bg-navy-800/50 hover:text-white">
                 <i data-lucide="sliders" class="w-4.5 h-4.5 text-slate-400 group-hover:text-emerald-500"></i>
-                <span>Setting</span>
+                <span>Kustomisasi</span>
             </button>
         </nav>
 
@@ -660,8 +660,8 @@
                                 </div>
                             </div>
 
-                            <!-- Live Scanner Box with viewfinders -->
-                            <div class="relative bg-slate-950 rounded-xl overflow-hidden aspect-video flex items-center justify-center border border-slate-200 shadow-inner">
+                            <!-- Live Scanner Box with viewfinders - Dioptimalkan untuk Mobile (Bujur Sangkar & Lebih Besar) -->
+                            <div class="relative bg-slate-950 rounded-xl overflow-hidden aspect-square w-full max-w-[340px] mx-auto flex items-center justify-center border border-slate-200 shadow-inner">
                                 <div id="qr-reader" class="w-full h-full"></div>
                                 <div id="qr-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 space-y-2 pointer-events-none">
                                     <div class="p-3 bg-slate-900 rounded-full text-slate-600">
@@ -669,13 +669,15 @@
                                     </div>
                                     <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Kamera Scanner Nonaktif</span>
                                 </div>
-                                <!-- Viewfinder Corners & Laser Line -->
-                                <div class="absolute inset-4 pointer-events-none border border-white/10 rounded-lg">
-                                    <div class="scanner-corner border-t-4 border-l-4 -top-1 -left-1"></div>
-                                    <div class="scanner-corner border-t-4 border-r-4 -top-1 -right-1"></div>
-                                    <div class="scanner-corner border-b-4 border-l-4 -bottom-1 -left-1"></div>
-                                    <div class="scanner-corner border-b-4 border-r-4 -bottom-1 -right-1"></div>
-                                    <div class="scanner-laser hidden" id="laser-line"></div>
+                                <!-- Viewfinder Corners & Laser Line (Centered Target Area 4/5 of container) -->
+                                <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                                    <div class="relative w-4/5 h-4/5 border border-white/5 rounded-lg">
+                                        <div class="scanner-corner border-t-4 border-l-4 -top-1 -left-1"></div>
+                                        <div class="scanner-corner border-t-4 border-r-4 -top-1 -right-1"></div>
+                                        <div class="scanner-corner border-b-4 border-l-4 -bottom-1 -left-1"></div>
+                                        <div class="scanner-corner border-b-4 border-r-4 -bottom-1 -right-1"></div>
+                                        <div class="scanner-laser hidden" id="laser-line"></div>
+                                    </div>
                                 </div>
                                 <!-- Biometric Face ID Overlay -->
                                 <div id="face-id-overlay" class="hidden absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
@@ -2140,7 +2142,7 @@ function loadDefaultData() {
 function sanitizeStateData() {
     if (!appState.branding) {
         appState.branding = {
-            appName: "SI-ANSOR PRO v7.0",
+            appName: "PRESENSI-ANSOR PRO v7.0",
             logo: `<svg class="w-8 h-8 text-emerald-700" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="#047857"/><path d="M50 15 L75 40 L60 40 L60 75 L40 75 L40 40 L25 40 Z" fill="#FBBF24"/><circle cx="50" cy="52" r="8" fill="#fff"/></svg>`,
             themeColor: "emerald",
             organisasi: "PC GP ANSOR KABUPATEN BOGOR",
@@ -3430,133 +3432,6 @@ function toggleSensorMode(mode) {
     lucide.createIcons();
 }
 
-function registerFaceBiometric() {
-    const participantId = document.getElementById("scan-manual-peserta").value;
-    if (!participantId) {
-        showCustomAlert("Pilih Kader", "Silakan pilih kader dari dropdown Pencatatan Manual terlebih dahulu untuk mendaftarkan biometrik wajahnya.", "warning");
-        return;
-    }
-
-    const kader = appState.peserta.find(p => p.id === participantId);
-    if (!kader) return;
-
-    const video = document.querySelector("#qr-reader video");
-    if (!video) {
-        showCustomAlert("Kamera Off", "Kamera pemindai harus diaktifkan terlebih dahulu untuk mengambil data kontur wajah biometrik.", "warning");
-        return;
-    }
-
-    showLoading("Merekam data biometrik wajah...", 20);
-
-    setTimeout(() => {
-        try {
-            const canvas = document.createElement("canvas");
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            const hash = generateFaceHash(canvas);
-            const snapshot = canvas.toDataURL("image/jpeg", 0.7);
-
-            kader.faceHash = hash;
-            kader.foto = snapshot; 
-
-            hideLoading();
-            saveStateToLocalStorage();
-            renderAppFromState();
-            showCustomAlert("Pendaftaran Sukses", `Sensor berhasil memetakan biometrik wajah Sahabat ${kader.nama} dengan kode hash: ${hash.substring(0, 10)}...`, "success");
-        } catch (err) {
-            hideLoading();
-            showCustomAlert("Gagal Rekam", "Sistem tidak dapat mengekstrak pola wajah: " + err.message, "danger");
-        }
-    }, 1200);
-}
-
-function generateFaceHash(canvas) {
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = 16;
-    tempCanvas.height = 16;
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCtx.drawImage(canvas, 0, 0, 16, 16);
-    
-    const imgData = tempCtx.getImageData(0, 0, 16, 16);
-    const pixels = imgData.data;
-    let grayscale = [];
-    let total = 0;
-    
-    for (let i = 0; i < pixels.length; i += 4) {
-        let val = Math.floor((pixels[i] + pixels[i+1] + pixels[i+2])/3);
-        grayscale.push(val);
-        total += val;
-    }
-    
-    let avg = total / grayscale.length;
-    let hash = "";
-    for (let i = 0; i < grayscale.length; i++) {
-        hash += (grayscale[i] >= avg) ? "1" : "0";
-    }
-    return hash;
-}
-
-function runFaceRecognition() {
-    const video = document.querySelector("#qr-reader video");
-    if (!video) {
-        showCustomAlert("Kamera Mati", "Silakan aktifkan kamera scanner terlebih dahulu.", "warning");
-        return;
-    }
-
-    showLoading("Menjalankan Pemindaian Biometrik...", 15);
-
-    setTimeout(() => {
-        try {
-            const canvas = document.createElement("canvas");
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            const liveHash = generateFaceHash(canvas);
-
-            let bestMatch = null;
-            let highestSimilarity = 0;
-
-            appState.peserta.forEach(p => {
-                if (p.faceHash) {
-                    let matches = 0;
-                    for (let i = 0; i < liveHash.length; i++) {
-                        if (liveHash[i] === p.faceHash[i]) matches++;
-                    }
-                    let similarity = (matches / liveHash.length) * 100;
-                    if (similarity > highestSimilarity) {
-                        highestSimilarity = similarity;
-                        bestMatch = p;
-                    }
-                }
-            });
-
-            hideLoading();
-
-            if (bestMatch && highestSimilarity >= 72) {
-                recordPresence(bestMatch.id);
-                showCustomAlert("Akses Terverifikasi", `Selamat Datang Sahabat ${bestMatch.nama}! Biometrik wajah cocok (${Math.round(highestSimilarity)}% similarity).`, "success");
-            } else {
-                const manualId = document.getElementById("scan-manual-peserta").value;
-                if (manualId) {
-                    const fallKader = appState.peserta.find(x => x.id === manualId);
-                    recordPresence(manualId);
-                    showCustomAlert("Biometric Match", `Kontur biometrik terdeteksi sebagai Sahabat ${fallKader.nama} (Simulasi 96% Match).`, "success");
-                } else {
-                    showCustomAlert("Gagal Otentikasi", "Wajah tidak teridentifikasi. Silakan lakukan pendaftaran biometrik terlebih dahulu dengan memilih nama kader di bawah lalu tekan tombol 'Daftar Face ID'.", "warning");
-                }
-            }
-        } catch (err) {
-            hideLoading();
-            showCustomAlert("Sistem Error", "Proses pemindaian terhambat: " + err.message, "danger");
-        }
-    }, 1500);
-}
-
 function startScanner() {
     document.getElementById("qr-placeholder").classList.add("hidden");
     document.getElementById("btn-start-scanner").classList.add("hidden");
@@ -3570,20 +3445,20 @@ function startScanner() {
 
     qrScanner = new Html5Qrcode("qr-reader");
     
-    // Fungsi dinamis untuk membuat kotak target adaptif sebesar 85% dari viewport aktif
+    // Fungsi dinamis untuk membuat kotak target adaptif sebesar 80% dari viewport aktif (Bujur Sangkar)
     const qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
-        const edgeSize = Math.min(viewfinderWidth, viewfinderHeight) * 0.85;
+        const edgeSize = Math.min(viewfinderWidth, viewfinderHeight) * 0.80;
         return {
             width: Math.floor(edgeSize),
             height: Math.floor(edgeSize)
         };
     };
     
-    // Konfigurasi performa tinggi untuk pemindaian responsif & tanpa distorsi
+    // Konfigurasi performa tinggi untuk pemindaian responsif & tanpa distorsi (Aspect Ratio 1:1)
     const config = { 
         fps: 30, // Frame rate 30 FPS untuk transisi umpan kamera yang sangat mulus
         qrbox: qrboxFunction,
-        aspectRatio: 1.7777778, // Rasio 16:9 agar video feed tidak terkompresi/gepeng
+        aspectRatio: 1.0, // Diubah menjadi 1:1 agar umpan kamera proporsional (bujur sangkar) di mobile
         rememberLastUsedCamera: true,
         experimentalFeatures: {
             useBarCodeDetectorIfSupported: true // Deteksi hardware seluler asli untuk pemindaian instan
@@ -4596,7 +4471,3 @@ window.onload = function () {
 </script>
 </body>
 </html>
-```
-eof
-
-Saya telah menghapus blok HTML penampung dropdown Simulasi Akun Aktif di bagian footer sidebar tersebut. Kode Javascript di belakang layar tetap bekerja dengan aman karena sudah dilengkapi dengan deteksi pengecekan elemen (`if (!sel) return;`).

@@ -64,7 +64,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #F5F7FA;
         }
-        /* SISTEM TIPOGRAFI TERPADU (SI-ANSOR PRO UNIFIED TYPOGRAPHY v7.1) */
+        /* SISTEM TIPOGRAFI TERPADU (PRESENSI-ANSOR PRO UNIFIED TYPOGRAPHY v7.1) */
         body, input, select, textarea, button, p, span, h1, h2, h3, h4, h5, h6, label {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
@@ -321,7 +321,7 @@
                         <path d="M51 64 L58 71 L66 63" stroke="#34d399" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-black uppercase tracking-widest text-white leading-none">SI-ANSOR PRO</h2>
+                <h2 class="text-2xl font-black uppercase tracking-widest text-white leading-none">PRESENSI-ANSOR PRO</h2>
                 <p class="text-[10px] text-emerald-300 font-bold uppercase tracking-widest mt-2">Enterprise Admin Panel</p>
                 <p class="text-xs text-white/70 mt-4 max-w-xs leading-relaxed hidden md:block">
                     Sistem integrasi manajemen kehadiran, analisis evaluasi kelulusan, serta pencetakan sertifikasi kader terpadu.
@@ -417,7 +417,7 @@
                 </svg>
             </div>
             <div class="truncate">
-                <h1 id="sidebar-title" class="font-extrabold text-sm tracking-tight text-white uppercase">SI-ANSOR PRO</h1>
+                <h1 id="sidebar-title" class="font-extrabold text-sm tracking-tight text-white uppercase">PRESENSI-ANSOR PRO</h1>
                 <p id="sidebar-subtitle" class="text-[9px] text-emerald-500 font-bold uppercase tracking-wider">Enterprise Admin Panel</p>
             </div>
         </div>
@@ -1263,6 +1263,11 @@
                                     <span id="setting-logo-file-name" class="text-[9px] text-slate-400 font-medium truncate">Belum ada logo diunggah</span>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="text-xs">
+                            <label class="block text-[9px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Struktur Logo SVG (Tag Path atau HTML img)</label>
+                            <textarea id="setting-logo" rows="3" class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg font-mono text-slate-600 focus:ring-1.5 focus:ring-emerald-500 focus:outline-none"></textarea>
                         </div>
 
                         <button type="submit" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold rounded-lg text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/10">
@@ -2192,7 +2197,7 @@ function loadDefaultData() {
     appState.tim = [...DEFAULT_TIM];
     appState.activeSesiId = 1;
     appState.branding = {
-        appName: "PRESENSI-ANSOR PRO v7.0",
+        appName: "SI-ANSOR PRO v7.0",
         logo: `<svg class="w-8 h-8" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 40 C30 40, 55 35, 60 35 C65 35, 90 40, 90 40 C90 40, 93 72, 60 92 C27 72, 30 40, 30 40 Z" stroke="#1E70CD" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/><path d="M42 55 L58 71 L86 43" stroke="#1E70CD" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" /><path d="M52 45 L74 23" stroke="#1E70CD" stroke-width="10" stroke-linecap="round" /><path d="M72 23 H86 V37" stroke="#1E70CD" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" /><path d="M51 64 L58 71 L66 63" stroke="#4FAF3C" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" /></svg>`,
         themeColor: "emerald",
         organisasi: "PC GP ANSOR KABUPATEN BOGOR",
@@ -2204,7 +2209,7 @@ function loadDefaultData() {
 function sanitizeStateData() {
     if (!appState.branding) {
         appState.branding = {
-            appName: "PRESENSI-ANSOR PRO v7.0",
+            appName: "SI-ANSOR PRO v7.0",
             logo: `<svg class="w-8 h-8" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 40 C30 40, 55 35, 60 35 C65 35, 90 40, 90 40 C90 40, 93 72, 60 92 C27 72, 30 40, 30 40 Z" stroke="#1E70CD" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/><path d="M42 55 L58 71 L86 43" stroke="#1E70CD" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" /><path d="M52 45 L74 23" stroke="#1E70CD" stroke-width="10" stroke-linecap="round" /><path d="M72 23 H86 V37" stroke="#1E70CD" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" /><path d="M51 64 L58 71 L66 63" stroke="#4FAF3C" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" /></svg>`,
             themeColor: "emerald",
             organisasi: "PC GP ANSOR KABUPATEN BOGOR",
@@ -2446,6 +2451,7 @@ function updateBrandingFormFields() {
     const orgEl = document.getElementById("setting-organisasi");
     const cabangEl = document.getElementById("setting-cabang");
     const totalSesiEl = document.getElementById("setting-total-sesi");
+    const logoEl = document.getElementById("setting-logo");
     const sessionsBadgeEl = document.getElementById("sessions-count-badge");
     const themeColorEl = document.getElementById("setting-theme-color");
 
@@ -2453,52 +2459,942 @@ function updateBrandingFormFields() {
     if (orgEl) orgEl.value = appState.branding.organisasi;
     if (cabangEl) cabangEl.value = appState.branding.cabang;
     if (totalSesiEl) totalSesiEl.value = appState.branding.totalSesi;
+    if (logoEl) logoEl.value = appState.branding.logo;
     if (themeColorEl) themeColorEl.value = appState.branding.themeColor || "emerald";
     if (sessionsBadgeEl) sessionsBadgeEl.innerText = `${appState.sesi.length} Sesi Terdaftar`;
 }
 
-// ------------------------- KUSTOMISASI BRANDING & OPTIMASI LOGO -------------------------
-let tempUploadedLogo = null; // Menyimpan data logo unggahan sementara dalam format tag IMG Base64
+// ------------------------- MAP & CHARTS IMPLEMENTATION -------------------------
+function initLeafletMap() {
+    if (geoMap) return;
 
-function handleLogoUpload(event) {
-    const file = event.target.files[0];
-    const nameSpan = document.getElementById("setting-logo-file-name");
-    if (file) {
-        nameSpan.innerText = file.name;
-        nameSpan.className = "text-[9px] text-emerald-600 font-bold truncate";
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const dataUrl = e.target.result;
-            // Format logo secara internal tanpa membebani kolom input visual
-            tempUploadedLogo = `<img src="${dataUrl}" class="w-8 h-8 object-contain rounded-lg" alt="App Logo">`;
-            showCustomAlert("Logo Terunggah", "Pratinjau logo siap disimpan. Tekan tombol Simpan di bawah untuk menerapkan perubahan.", "success");
-        };
-        reader.readAsDataURL(file);
+    geoMap = L.map('map-distribution', {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([-6.4816, 106.8288], 10);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19
+    }).addTo(geoMap);
+
+    const pacLocations = [
+        { name: "Gunung Putri", coords: [-6.4011, 106.9038] },
+        { name: "Citeureup", coords: [-6.4952, 106.8837] },
+        { name: "Cileungsi", coords: [-6.4182, 106.9691] },
+        { name: "Caringin", coords: [-6.7118, 106.8322] }
+    ];
+
+    pacLocations.forEach(loc => {
+        const finalCount = appState.peserta.filter(p => p.utusan.toLowerCase().includes(loc.name.toLowerCase())).length;
+
+        const customIcon = L.divIcon({
+            html: `<div class="bg-emerald-500 border-2 border-white text-white font-black text-[9px] w-5 h-5 rounded-full flex items-center justify-center shadow-md shadow-emerald-500/20">${finalCount}</div>`,
+            className: 'custom-div-icon',
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+
+        L.marker(loc.coords, { icon: customIcon })
+            .addTo(geoMap)
+            .bindPopup(`<strong class="text-xs text-navy-900">PAC ${loc.name}</strong><br><span class="text-[10px] text-slate-500">${finalCount} Kader Terdaftar</span>`);
+    });
+}
+
+function initChartJs() {
+    const ctxBar = document.getElementById('attendance-bar-chart').getContext('2d');
+    const sesiLabels = appState.sesi.map(s => `Sesi ${s.num}`);
+    const dataHadir = appState.sesi.map(s => appState.presensi.filter(p => p.sesi === s.num).length);
+    const dataAlpa = appState.sesi.map(s => {
+        const presentInSesi = appState.presensi.filter(p => p.sesi === s.num).length;
+        return Math.max(0, appState.peserta.length - presentInSesi);
+    });
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const textColor = isDark ? '#cbd5e1' : '#475569';
+    const gridColor = isDark ? '#0f1f38' : '#f1f5f9';
+
+    barChartInstance = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: sesiLabels,
+            datasets: [
+                {
+                    label: 'Hadir',
+                    data: dataHadir,
+                    backgroundColor: '#16C784',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Alpa',
+                    data: dataAlpa,
+                    backgroundColor: '#E2E8F0',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { color: textColor } },
+                y: { stacked: true, grid: { color: gridColor }, ticks: { stepSize: 1, color: textColor } }
+            }
+        }
+    });
+
+    const ctxLine = document.getElementById('trend-line-chart').getContext('2d');
+    const trendData = appState.sesi.map(s => {
+        const matched = appState.presensi.filter(p => p.sesi === s.num).length;
+        return Math.round((matched / (appState.peserta.length || 1)) * 100);
+    });
+
+    lineChartInstance = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: sesiLabels,
+            datasets: [{
+                label: 'Presentase (%)',
+                data: trendData,
+                borderColor: '#16C784',
+                backgroundColor: 'rgba(22, 199, 132, 0.05)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2.5,
+                pointBackgroundColor: '#16C784'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { color: textColor } },
+                y: { grid: { color: gridColor }, min: 0, max: 100, ticks: { stepSize: 20, color: textColor } }
+            }
+        }
+    });
+}
+
+function updateChartsAndMap() {
+    if (barChartInstance && lineChartInstance) {
+        barChartInstance.data.labels = appState.sesi.map(s => `Sesi ${s.num}`);
+        barChartInstance.data.datasets[0].data = appState.sesi.map(s => appState.presensi.filter(p => p.sesi === s.num).length);
+        barChartInstance.data.datasets[1].data = appState.sesi.map(s => {
+            const presentInSesi = appState.presensi.filter(p => p.sesi === s.num).length;
+            return Math.max(0, appState.peserta.length - presentInSesi);
+        });
+        barChartInstance.update();
+
+        lineChartInstance.data.labels = appState.sesi.map(s => `Sesi ${s.num}`);
+        lineChartInstance.data.datasets[0].data = appState.sesi.map(s => {
+            const matched = appState.presensi.filter(p => p.sesi === s.num).length;
+            return Math.round((matched / (appState.peserta.length || 1)) * 100);
+        });
+        lineChartInstance.update();
     }
 }
 
+// ------------------------- DATA PESERTA & KADER -------------------------
+function renderTablePeserta() {
+    const tbody = document.getElementById("table-body-peserta");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    appState.peserta.forEach(p => {
+        const defaultPhoto = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150";
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/50 transition align-middle border-b border-slate-100";
+        tr.innerHTML = `
+            <td class="p-4 font-bold text-[#00966c] text-[11px] tracking-wider">${p.id}</td>
+            <td class="p-4">
+                <div class="flex items-center space-x-3">
+                    <img src="${p.foto || defaultPhoto}" onerror="this.src='${defaultPhoto}'" class="w-8 h-8 rounded-full object-cover ring-2 ring-emerald-500/10 shadow-sm shrink-0">
+                    <span class="font-bold text-slate-800 text-xs uppercase">${p.nama}</span>
+                </div>
+            </td>
+            <td class="p-4 font-semibold text-slate-500">${p.utusan}</td>
+            <td class="p-4 text-slate-600 font-semibold font-mono text-xs">${p.hp}</td>
+            <td class="p-4">
+                <div class="flex items-center justify-center space-x-2">
+                    <button onclick="openModalCetakQR('${p.id}')" class="p-2 bg-slate-50 hover:bg-slate-100 text-slate-650 rounded-lg border border-slate-150 transition" title="Cetak ID QR">
+                        <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="editPeserta('${p.id}')" class="p-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg border border-blue-100/60 transition" title="Ubah Biodata">
+                        <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="deletePeserta('${p.id}')" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg border border-rose-100/60 transition" title="Hapus Kader">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    lucide.createIcons();
+}
+
+function filterTablePeserta() {
+    const q = document.getElementById("search-peserta").value.toLowerCase();
+    const rows = document.querySelectorAll("#table-body-peserta tr");
+    rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(q) ? "" : "none");
+}
+
+function openModalTambahPeserta() {
+    document.getElementById("modal-peserta-title").innerText = "TAMBAH REGISTER PESERTA";
+    document.getElementById("peserta-form-id").value = "";
+    document.getElementById("peserta-form-nama").value = "";
+    document.getElementById("peserta-form-utusan").value = "";
+    document.getElementById("peserta-form-hp").value = "";
+    document.getElementById("peserta-form-foto").value = "";
+    document.getElementById("peserta-form-file-picker").value = "";
+    document.getElementById("peserta-form-file-name").innerText = "No file chosen";
+    document.getElementById("peserta-form-file-name").classList.add("text-slate-400");
+    document.getElementById("peserta-form-file-name").classList.remove("text-slate-700", "font-bold");
+    
+    const m = document.getElementById("modal-peserta");
+    m.classList.remove("hidden");
+    setTimeout(() => m.firstElementChild.classList.remove("scale-95"), 10);
+}
+
+function closeModalPeserta() {
+    const m = document.getElementById("modal-peserta");
+    m.firstElementChild.classList.add("scale-95");
+    setTimeout(() => m.classList.add("hidden"), 150);
+}
+
+function handleModalFileSelect(event) {
+    const file = event.target.files[0];
+    const nameSpan = document.getElementById("peserta-form-file-name");
+    const hiddenFotoInput = document.getElementById("peserta-form-foto");
+    
+    if (file) {
+        nameSpan.innerText = file.name;
+        nameSpan.classList.remove("text-slate-400");
+        nameSpan.classList.add("text-slate-700", "font-bold");
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            hiddenFotoInput.value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        nameSpan.innerText = "No file chosen";
+        nameSpan.classList.add("text-slate-400");
+        nameSpan.classList.remove("text-slate-700", "font-bold");
+        hiddenFotoInput.value = "";
+    }
+}
+
+function editPeserta(id) {
+    const p = appState.peserta.find(x => x.id === id);
+    if (!p) return;
+
+    document.getElementById("modal-peserta-title").innerText = "Ubah Biodata Kader";
+    document.getElementById("peserta-form-id").value = p.id;
+    document.getElementById("peserta-form-nama").value = p.nama;
+    document.getElementById("peserta-form-utusan").value = p.utusan;
+    document.getElementById("peserta-form-hp").value = p.hp;
+    document.getElementById("peserta-form-foto").value = p.foto || "";
+    document.getElementById("peserta-form-file-name").innerText = p.foto ? "Image linked" : "No file chosen";
+    if (p.foto) {
+        document.getElementById("peserta-form-file-name").classList.remove("text-slate-400");
+        document.getElementById("peserta-form-file-name").classList.add("text-slate-700", "font-bold");
+    }
+
+    const m = document.getElementById("modal-peserta");
+    m.classList.remove("hidden");
+    setTimeout(() => m.firstElementChild.classList.remove("scale-95"), 10);
+}
+
+function submitFormPeserta(e) {
+    e.preventDefault();
+    const id = document.getElementById("peserta-form-id").value;
+    const nama = document.getElementById("peserta-form-nama").value;
+    const utusan = document.getElementById("peserta-form-utusan").value;
+    const hp = document.getElementById("peserta-form-hp").value;
+    const foto = document.getElementById("peserta-form-foto").value;
+
+    showLoading("Menyimpan perubahan...", 30);
+
+    setTimeout(() => {
+        if (id) {
+            const idx = appState.peserta.findIndex(x => x.id === id);
+            if (idx !== -1) {
+                appState.peserta[idx] = { ...appState.peserta[idx], nama, utusan, hp, foto };
+            }
+        } else {
+            const d = new Date();
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            const dateStr = `${day}${month}${year}`;
+            const orderNum = String(appState.peserta.length + 1).padStart(3, '0');
+            const newId = `IX-22.29.01.${dateStr}.${orderNum}`;
+            
+            appState.peserta.push({
+                id: newId, nama, utusan, hp, foto,
+                nilai_post_test: 0, nilai_praktik: 0, nilai_keaktifan: 0,
+                status_kelulusan: "TIDAK LULUS", no_sertifikat: ""
+            });
+        }
+        hideLoading();
+        closeModalPeserta();
+        saveStateToLocalStorage();
+        renderAppFromState();
+        showCustomAlert("Database Diperbarui", "Data kader berhasil disimpan.", "success");
+    }, 600);
+}
+
+function deletePeserta(id) {
+    showCustomConfirm("Hapus Anggota", `Yakin ingin menghapus data kader ${id}?`, (yes) => {
+        if (!yes) return;
+        showLoading("Menghapus data...", 40);
+        setTimeout(() => {
+            appState.peserta = appState.peserta.filter(x => x.id !== id);
+            appState.presensi = appState.presensi.filter(x => x.id !== id);
+            hideLoading();
+            saveStateToLocalStorage();
+            renderAppFromState();
+            updateChartsAndMap();
+            showCustomAlert("Hapus Berhasil", "Data kader telah dihapus.", "success");
+        }, 500);
+    });
+}
+
+// ------------------------- KELOLA SESI JAVASCRIPT -------------------------
+function renderTableSesiList() {
+    const tbody = document.getElementById("table-body-sesi-list");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    appState.sesi.sort((a,b) => a.num - b.num).forEach(s => {
+        const tr = document.createElement("tr");
+        tr.className = `hover:bg-slate-50 transition border-b border-slate-100 ${s.active ? 'bg-emerald-50/25' : ''}`;
+        tr.innerHTML = `
+            <td class="p-3 font-mono font-bold text-navy-900">Sesi ${s.num}</td>
+            <td class="p-3">
+                <p class="font-bold text-slate-800 text-xs">${s.materi}</p>
+                <p class="text-[10px] text-slate-400 font-semibold">${s.instruktur}</p>
+            </td>
+            <td class="p-3">
+                <p class="font-semibold text-slate-700 font-mono text-[11px]">${s.startTime || '08:00'}</p>
+                <p class="text-[10px] text-slate-400">${s.duration || 90} Menit</p>
+            </td>
+            <td class="p-3">
+                <p class="text-[10px] text-slate-500 font-bold">Late: ${s.maxLate || 10}m</p>
+                <p class="text-[9px] text-slate-400">Toilet: ${s.toiletLimit || 5}m</p>
+            </td>
+            <td class="p-3 text-center">
+                <div class="flex items-center justify-center space-x-1">
+                    <button onclick="setActiveSesi(${s.num})" class="px-2 py-1 rounded text-[9px] font-black uppercase transition ${s.active ? 'bg-[#00966c] text-white shadow-xs' : 'bg-slate-100 text-slate-650 hover:bg-slate-200'}" ${s.active ? 'disabled' : ''}>
+                        ${s.active ? 'Aktif' : 'Pilih'}
+                    </button>
+                    <button onclick="editSesi(${s.num})" class="p-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded transition" title="Edit Sesi">
+                        <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="deleteSesi(${s.num})" class="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-500 rounded transition" title="Hapus Sesi">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    lucide.createIcons();
+}
+
+function prepareAddSesi() {
+    document.getElementById("input-sesi-num").value = appState.sesi.length + 1;
+    document.getElementById("input-sesi-materi").value = "";
+    document.getElementById("input-sesi-instruktur").value = "";
+    document.getElementById("input-sesi-start-time").value = "08:00";
+    document.getElementById("input-sesi-duration").value = "90";
+    document.getElementById("input-sesi-late").value = "10";
+    document.getElementById("input-sesi-toilet").value = "5";
+    
+    const container = document.getElementById("sesi-form-container");
+    container.scrollIntoView({ behavior: 'smooth' });
+    container.classList.add("ring-2", "ring-emerald-500/55");
+    setTimeout(() => {
+        container.classList.remove("ring-2", "ring-emerald-500/55");
+    }, 1500);
+}
+
+function saveActiveSesi(e) {
+    e.preventDefault();
+    const num = parseInt(document.getElementById("input-sesi-num").value);
+    const materi = document.getElementById("input-sesi-materi").value;
+    const instruktur = document.getElementById("input-sesi-instruktur").value;
+    const startTime = document.getElementById("input-sesi-start-time").value;
+    const duration = parseInt(document.getElementById("input-sesi-duration").value);
+    const maxLate = parseInt(document.getElementById("input-sesi-late").value);
+    const toiletLimit = parseInt(document.getElementById("input-sesi-toilet").value);
+
+    showLoading("Menyimpan silabus sesi...", 25);
+    setTimeout(() => {
+        const idx = appState.sesi.findIndex(s => s.num === num);
+        if (idx !== -1) {
+            appState.sesi[idx] = { num, materi, instruktur, startTime, duration, maxLate, toiletLimit, active: appState.sesi[idx].active };
+        } else {
+            appState.sesi.push({ num, materi, instruktur, startTime, duration, maxLate, toiletLimit, active: false });
+        }
+        hideLoading();
+        saveStateToLocalStorage();
+        renderAppFromState();
+        updateChartsAndMap();
+        showCustomAlert("Sesi Disimpan", `Data modul untuk Sesi ${num} berhasil diarsipkan.`, "success");
+    }, 500);
+}
+
+function editSesi(num) {
+    const s = appState.sesi.find(x => x.num === num);
+    if (!s) return;
+
+    document.getElementById("input-sesi-num").value = s.num;
+    document.getElementById("input-sesi-materi").value = s.materi;
+    document.getElementById("input-sesi-instruktur").value = s.instruktur;
+    document.getElementById("input-sesi-start-time").value = s.startTime || "08:00";
+    document.getElementById("input-sesi-duration").value = s.duration || "90";
+    document.getElementById("input-sesi-late").value = s.maxLate || "10";
+    document.getElementById("input-sesi-toilet").value = s.toiletLimit || "5";
+
+    const container = document.getElementById("sesi-form-container");
+    container.scrollIntoView({ behavior: 'smooth' });
+    container.classList.add("ring-2", "ring-blue-500/55");
+    setTimeout(() => {
+        container.classList.remove("ring-2", "ring-blue-500/55");
+    }, 1500);
+}
+
+function deleteSesi(num) {
+    showCustomConfirm("Hapus Sesi", `Yakin ingin menghapus Sesi ${num}?`, (yes) => {
+        if (!yes) return;
+        appState.sesi = appState.sesi.filter(s => s.num !== num);
+        saveStateToLocalStorage();
+        renderAppFromState();
+        updateChartsAndMap();
+        showCustomAlert("Terhapus", `Sesi ${num} telah dihapus dari program.`, "success");
+    });
+}
+
+function onSesiChange() {
+    const num = parseInt(document.getElementById("scan-select-sesi").value) || 1;
+    const s = appState.sesi.find(x => x.num === num) || appState.sesi[0];
+    if (s) {
+        document.getElementById("scan-materi").value = s.materi;
+    }
+}
+
+function setActiveSesi(num) {
+    appState.sesi.forEach(s => s.active = (s.num === num));
+    appState.activeSesiId = num;
+    saveStateToLocalStorage();
+    renderAppFromState();
+    updateChartsAndMap();
+    showCustomAlert("Sesi Berubah", `Sesi ${num} sekarang menjadi sesi aktif kelas.`, "success");
+}
+
+// ------------------------- REKAP PRESENSI JAVASCRIPT -------------------------
+function renderTableRekapPresensi() {
+    const tbody = document.getElementById("table-body-rekap-presensi");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    if (appState.presensi.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-semibold uppercase tracking-wider">Belum ada rekaman kehadiran masuk</td></tr>`;
+        return;
+    }
+
+    appState.presensi.forEach(p => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100 text-xs text-slate-650 align-middle";
+        
+        tr.innerHTML = `
+            <td class="p-3 font-bold text-navy-900">${p.nama}</td>
+            <td class="p-3 font-semibold text-slate-500">${p.utusan}</td>
+            <td class="p-3 text-center font-mono font-bold text-slate-600">Sesi ${p.sesi}</td>
+            <td class="p-3 text-slate-600 truncate max-w-[200px]">${p.materi}</td>
+            <td class="p-3 font-mono text-[11px] text-slate-500">${p.waktu}</td>
+            <td class="p-3 text-center">
+                <span class="px-2 py-0.5 rounded-full border font-black text-[9px] uppercase tracking-wider ${p.status === 'Tepat Waktu' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-amber-50 text-amber-700 border-amber-100'}">${p.status}</span>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// ------------------------- REKAP KELULUSAN & ALGORITMA AI -------------------------
+function renderTableRekapHeaders() {
+    const tableEl = document.querySelector("#page-kelulusan table");
+    if (!tableEl) return;
+    
+    let theadHTML = `
+        <tr class="bg-slate-50 text-slate-400 font-extrabold text-[9px] uppercase tracking-wider border-b border-slate-200 align-middle">
+            <th class="p-3 sticky left-0 bg-slate-50 z-10 w-12 text-center shadow-[3px_0_10px_-3px_rgba(0,0,0,0.06)]">NO</th>
+            <th class="p-3 sticky left-12 bg-slate-50 z-10 w-44 shadow-[3px_0_10px_-3px_rgba(0,0,0,0.06)]">Nama Lengkap</th>
+            <th class="p-3 w-32">PAC / Utusan</th>
+    `;
+    
+    const sortedSesi = [...appState.sesi].sort((a,b) => a.num - b.num);
+    
+    sortedSesi.forEach(s => {
+        // Menggunakan nama materi asli langsung dari manajemen kelola sesi
+        const label = s.materi ? s.materi.toUpperCase() : `SESI #${s.num}`;
+        theadHTML += `<th class="p-2 text-center w-28 text-[9px] font-bold border-l border-slate-100 whitespace-normal break-words leading-tight max-w-[110px]" title="${label}">${label}</th>`;
+    });
+    
+    theadHTML += `
+            <th class="p-3 text-center w-20 font-black text-slate-700 bg-slate-100 border-l border-slate-150">HASIL</th>
+            <th class="p-3 text-center w-20 font-black text-slate-700 bg-slate-100">PERSENTASE</th>
+            <th class="p-3 text-center w-24 font-black text-slate-700 bg-slate-100">IZIN / MENIT</th>
+            <th class="p-3 text-center w-36">Evaluasi AI</th>
+            <th class="p-3 w-36">No. Sertifikat</th>
+            <th class="p-3 text-center w-24 sticky right-0 bg-slate-50 z-10 shadow-[-3px_0_10px_-3px_rgba(0,0,0,0.06)]">Aksi</th>
+        </tr>
+    `;
+    
+    const theadEl = tableEl.querySelector("thead");
+    if (theadEl) {
+        theadEl.innerHTML = theadHTML;
+    }
+}
+
+function renderTableRekap() {
+    renderTableRekapHeaders();
+
+    let lCount = appState.peserta.filter(x => x.status_kelulusan === "LULUS").length;
+    let bCount = appState.peserta.filter(x => x.status_kelulusan === "LULUS BERSYARAT").length;
+    let tCount = appState.peserta.filter(x => x.status_kelulusan === "TIDAK LULUS").length;
+
+    document.getElementById("ai-count-lulus").innerText = lCount;
+    document.getElementById("ai-count-bersyarat").innerText = bCount;
+    document.getElementById("ai-count-tidak").innerText = tCount;
+
+    const tbody = document.getElementById("table-body-kelulusan");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    const sortedSesi = [...appState.sesi].sort((a,b) => a.num - b.num);
+    const totalDuration = sortedSesi.reduce((sum, s) => sum + (parseInt(s.duration) || 0), 0) || 1;
+
+    appState.peserta.forEach((p, index) => {
+        const presentSesiNums = appState.presensi
+            .filter(pr => pr.id === p.id)
+            .map(pr => parseInt(pr.sesi));
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/70 transition border-b border-slate-100 text-xs text-slate-650 align-middle";
+
+        // NO Column
+        let cellNo = document.createElement("td");
+        cellNo.className = "p-3 text-center font-bold sticky left-0 bg-white z-10 shadow-[3px_0_10px_-3px_rgba(0,0,0,0.06)]";
+        cellNo.innerText = index + 1;
+        tr.appendChild(cellNo);
+
+        // NAMA LENGKAP Column
+        let cellName = document.createElement("td");
+        cellName.className = "p-3 font-bold text-navy-900 sticky left-12 bg-white z-10 shadow-[3px_0_10px_-3px_rgba(0,0,0,0.06)] truncate max-w-[160px]";
+        cellName.innerText = p.nama;
+        tr.appendChild(cellName);
+
+        // KECAMATAN Column
+        let cellKec = document.createElement("td");
+        cellKec.className = "p-3 font-bold text-slate-500 uppercase";
+        cellKec.innerText = p.utusan;
+        tr.appendChild(cellKec);
+
+        // Render cell matching each session duration
+        let attendedDuration = 0;
+        sortedSesi.forEach(s => {
+            let cellSesi = document.createElement("td");
+            cellSesi.className = "p-3 text-center font-mono font-bold border-l border-slate-100";
+            
+            const isPresent = presentSesiNums.includes(s.num);
+            if (isPresent) {
+                const dur = parseInt(s.duration) || 0;
+                cellSesi.innerText = dur;
+                attendedDuration += dur;
+                cellSesi.className += " text-slate-800 bg-emerald-50/10";
+            } else {
+                // Return 0 or blank if absent
+                cellSesi.innerText = "0";
+                cellSesi.className += " text-rose-400 bg-rose-50/10";
+            }
+            tr.appendChild(cellSesi);
+        });
+
+        // HASIL Column
+        let cellHasil = document.createElement("td");
+        cellHasil.className = "p-3 text-center font-black font-mono text-slate-800 bg-slate-50 border-l border-slate-200";
+        cellHasil.innerText = attendedDuration;
+        tr.appendChild(cellHasil);
+
+        // PERSENTASE Column
+        const pct = Math.round((attendedDuration / totalDuration) * 100) || 0;
+        let cellPct = document.createElement("td");
+        cellPct.className = `p-3 text-center font-black font-mono ${pct >= 80 ? 'text-emerald-500' : 'text-rose-500'} bg-slate-50`;
+        cellPct.innerText = pct + "%";
+        tr.appendChild(cellPct);
+
+        // IZIN / MENIT Column
+        let cellIzin = document.createElement("td");
+        cellIzin.className = "p-3 text-center font-mono font-black text-slate-700 bg-slate-50";
+        cellIzin.innerText = p.izin_menit || 0;
+        tr.appendChild(cellIzin);
+
+        // Evaluasi AI Column
+        let cellStatus = document.createElement("td");
+        cellStatus.className = "p-3 text-center";
+        let badgeClass = "bg-rose-50 text-rose-700 border-rose-100";
+        if (p.status_kelulusan === "LULUS") badgeClass = "bg-emerald-50 text-emerald-800 border-emerald-100";
+        else if (p.status_kelulusan === "LULUS BERSYARAT") badgeClass = "bg-amber-50 text-amber-800 border-amber-100";
+
+        cellStatus.innerHTML = `
+            <div class="flex items-center justify-center space-x-1.5">
+                <span class="px-2 py-0.5 rounded-full border font-black text-[8px] uppercase tracking-wider ${badgeClass}">${p.status_kelulusan || 'TIDAK LULUS'}</span>
+                <button onclick="openAiDiagnostic('${p.id}')" class="p-1 hover:bg-slate-100 text-emerald-500 rounded-lg transition" title="Logika Keputusan AI">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-500 animate-pulse"></i>
+                </button>
+            </div>
+        `;
+        tr.appendChild(cellStatus);
+
+        // No. Sertifikat
+        let cellSert = document.createElement("td");
+        cellSert.className = "p-3 font-mono text-[9px] text-slate-400";
+        cellSert.innerText = p.no_sertifikat || "-";
+        tr.appendChild(cellSert);
+
+        // Aksi Column
+        let cellAction = document.createElement("td");
+        cellAction.className = "p-3 text-center sticky right-0 bg-white z-10 shadow-[-3px_0_10px_-3px_rgba(0,0,0,0.06)]";
+        
+        const canPrint = p.status_kelulusan === "LULUS";
+        cellAction.innerHTML = `
+            <div class="flex items-center justify-center space-x-1">
+                <button onclick="openModalEvaluasi('${p.id}')" class="p-1.5 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition" title="Input Nilai">
+                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="renderAndDownloadCertificate('${p.id}')" class="p-1.5 bg-emerald-50 text-emerald-500 rounded-lg hover:bg-emerald-100 transition disabled:opacity-30 disabled:cursor-not-allowed" ${!canPrint ? 'disabled' : ''} title="Unduh Sertifikat">
+                    <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        `;
+        tr.appendChild(cellAction);
+
+        tbody.appendChild(tr);
+    });
+
+    lucide.createIcons();
+}
+
+function filterTableKelulusan() {
+    const q = document.getElementById("search-kelulusan").value.toLowerCase();
+    const rows = document.querySelectorAll("#table-body-kelulusan tr");
+    rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(q) ? "" : "none");
+}
+
+function openModalEvaluasi(id) {
+    const p = appState.peserta.find(x => x.id === id);
+    if (!p) return;
+
+    document.getElementById("modal-evaluasi-sub").innerText = `${p.nama} (${p.utusan})`;
+    document.getElementById("evaluasi-form-id").value = p.id;
+    document.getElementById("evaluasi-form-post").value = p.nilai_post_test || 0;
+    document.getElementById("evaluasi-form-praktik").value = p.nilai_praktik || 0;
+    document.getElementById("evaluasi-form-keaktifan").value = p.nilai_keaktifan || 0;
+    document.getElementById("evaluasi-form-izin").value = p.izin_menit || 0;
+    document.getElementById("evaluasi-form-status").value = p.status_kelulusan || "TIDAK LULUS";
+    document.getElementById("evaluasi-form-sertifikat").value = p.no_sertifikat || "";
+
+    const m = document.getElementById("modal-evaluasi");
+    m.classList.remove("hidden");
+    setTimeout(() => m.firstElementChild.classList.remove("scale-95"), 10);
+}
+
+function closeModalEvaluasi() {
+    const m = document.getElementById("modal-evaluasi");
+    m.firstElementChild.classList.add("scale-95");
+    setTimeout(() => m.classList.add("hidden"), 150);
+}
+
+function submitFormEvaluasi(e) {
+    e.preventDefault();
+    const id = document.getElementById("evaluasi-form-id").value;
+    const post = parseInt(document.getElementById("evaluasi-form-post").value) || 0;
+    const praktik = parseInt(document.getElementById("evaluasi-form-praktik").value) || 0;
+    const keaktifan = parseInt(document.getElementById("evaluasi-form-keaktifan").value) || 0;
+    const izin = parseInt(document.getElementById("evaluasi-form-izin").value) || 0;
+    const status = document.getElementById("evaluasi-form-status").value;
+    const sertifikat = document.getElementById("evaluasi-form-sertifikat").value;
+
+    showLoading("Menyimpan hasil kelulusan...", 30);
+    setTimeout(() => {
+        const idx = appState.peserta.findIndex(x => x.id === id);
+        if (idx !== -1) {
+            appState.peserta[idx].nilai_post_test = post;
+            appState.peserta[idx].nilai_praktik = praktik;
+            appState.peserta[idx].nilai_keaktifan = keaktifan;
+            appState.peserta[idx].izin_menit = izin;
+            appState.peserta[idx].status_kelulusan = status;
+            appState.peserta[idx].no_sertifikat = sertifikat;
+        }
+        hideLoading();
+        closeModalEvaluasi();
+        saveStateToLocalStorage();
+        renderAppFromState();
+        showCustomAlert("Kalkulasi Tersimpan", "Nilai akademik berhasil disinkronisasi.", "success");
+    }, 500);
+}
+
+// INSPEKTOR DIAGNOSTIK PREDIKSI AI (C4.5 & NAIVE BAYES)
+function openAiDiagnostic(id) {
+    const p = appState.peserta.find(x => x.id === id);
+    if (!p) return;
+
+    const totalSesi = appState.branding.totalSesi;
+    AI_ENGINE.train(appState.peserta, appState.presensi, totalSesi);
+
+    const minPres = parseFloat(document.getElementById("config-min-presensi-ai").value) || 80;
+    const minMenit = parseFloat(document.getElementById("config-min-menit-ai").value) || 877.5;
+
+    let res = AI_ENGINE.predict(p, appState.presensi, totalSesi, minPres, minMenit);
+    let trace = res.trace;
+
+    document.getElementById("diag-nama").innerText = p.nama;
+    document.getElementById("diag-utusan").innerText = "Asal Utusan: PAC " + p.utusan;
+    document.getElementById("diag-avatar").innerText = p.nama.charAt(0).toUpperCase();
+
+    document.getElementById("diag-tree-presence").innerText = trace.treeSplitPresence;
+    document.getElementById("diag-tree-scores").innerText = trace.treeSplitScores;
+    document.getElementById("diag-tree-result").innerText = "C4.5: " + trace.treeDecision;
+
+    let pLulus = Math.round((trace.probabilities["LULUS"] || 0) * 100);
+    let pBersyarat = Math.round((trace.probabilities["LULUS BERSYARAT"] || 0) * 100);
+    let pTidak = Math.round((trace.probabilities["TIDAK LULUS"] || 0) * 100);
+
+    document.getElementById("diag-prob-lulus").innerText = pLulus + "%";
+    document.getElementById("diag-bar-lulus").style.width = pLulus + "%";
+
+    document.getElementById("diag-prob-bersyarat").innerText = pBersyarat + "%";
+    document.getElementById("diag-bar-bersyarat").style.width = pBersyarat + "%";
+
+    document.getElementById("diag-prob-tidak").innerText = pTidak + "%";
+    document.getElementById("diag-bar-tidak").style.width = pTidak + "%";
+
+    document.getElementById("diag-final-class").innerText = res.status;
+    const badge = document.getElementById("diag-final-class");
+    if (res.status === "LULUS") {
+        badge.className = "text-sm font-black text-emerald-600 uppercase tracking-wider";
+    } else if (res.status === "LULUS BERSYARAT") {
+        badge.className = "text-sm font-black text-amber-500 uppercase tracking-wider";
+    } else {
+        badge.className = "text-sm font-black text-rose-500 uppercase tracking-wider";
+    }
+
+    const m = document.getElementById("modal-ai-diagnostic");
+    m.classList.remove("hidden");
+    setTimeout(() => m.firstElementChild.classList.remove("scale-95"), 10);
+}
+
+function closeAiDiagnostic() {
+    const m = document.getElementById("modal-ai-diagnostic");
+    m.firstElementChild.classList.add("scale-95");
+    setTimeout(() => m.classList.add("hidden"), 150);
+}
+
+function evaluateAllAI() {
+    const minPres = parseFloat(document.getElementById("config-min-presensi-ai").value) || 80;
+    const minMenit = parseFloat(document.getElementById("config-min-menit-ai").value) || 877.5;
+    const totalSesi = appState.branding.totalSesi;
+
+    showCustomConfirm("AI Auto-Kalkulasi", "Apakah Anda bersedia melatih Model Hibrida AI secara langsung untuk mengevaluasi kelulusan seluruh kader?", (yes) => {
+        if (!yes) return;
+
+        showLoading("Melatih model Bayesian posterior & pohon C4.5...", 25);
+        
+        setTimeout(() => {
+            AI_ENGINE.train(appState.peserta, appState.presensi, totalSesi);
+            appState.peserta.forEach((p, idx) => {
+                let res = AI_ENGINE.predict(p, appState.presensi, totalSesi, minPres, minMenit);
+                p.status_kelulusan = res.status;
+                if (res.status === "LULUS" && !p.no_sertifikat) {
+                    p.no_sertifikat = `CERT/ANSR/PC/${String(idx + 1).padStart(3, '0')}/2026`;
+                }
+            });
+
+            hideLoading();
+            saveStateToLocalStorage();
+            renderAppFromState();
+            showCustomAlert("Evaluasi Rampung", "Model pengklasifikasi berhasil memperbarui status akademik.", "success");
+        }, 1200);
+    });
+}
+
+// ------------------------- MANAJEMEN TIM -------------------------
+function renderTableTim() {
+    const tbody = document.getElementById("table-body-tim");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    appState.tim.forEach((t, idx) => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/50 transition align-middle border-b border-slate-100";
+        tr.innerHTML = `
+            <td class="p-4">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="user-check" class="w-4 h-4 text-[#00966c]"></i>
+                    <span class="font-bold text-slate-800 text-xs">${t.nama}</span>
+                </div>
+            </td>
+            <td class="p-4 font-mono text-[11px] text-slate-500">
+                <div class="flex items-center space-x-1.5">
+                    <i data-lucide="at-sign" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <span>${t.username}</span>
+                </div>
+            </td>
+            <td class="p-4 font-mono text-[11px] text-slate-450">
+                <div class="flex items-center space-x-1.5">
+                    <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-350"></i>
+                    <span>••••••••</span>
+                </div>
+            </td>
+            <td class="p-4 text-xs font-bold ${t.role === 'Admin' ? 'text-emerald-600' : 'text-blue-600'}">
+                ${t.role}
+            </td>
+            <td class="p-4 text-center">
+                <div class="flex items-center justify-center space-x-1">
+                    <button onclick="editTim(${idx})" class="p-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg border border-blue-100 transition" title="Edit Akses">
+                        <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="deleteTim(${idx})" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg border border-rose-100 transition" title="Hapus">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    lucide.createIcons();
+}
+
+function openModalTambahTim() {
+    document.getElementById("modal-tim-title").innerText = "REGISTER AKUN TIM OPERATOR";
+    document.getElementById("tim-form-index").value = "";
+    document.getElementById("tim-form-nama").value = "";
+    document.getElementById("tim-form-username").value = "";
+    document.getElementById("tim-form-password").value = "";
+    document.getElementById("tim-form-role").value = "Operator";
+    window.toggleAccessPermissions("Operator");
+
+    // Reset Checkboxes to default state
+    document.querySelectorAll('input[name="perm"]').forEach(cb => {
+        cb.checked = true; // Default all selected
+    });
+
+    const m = document.getElementById("modal-tim");
+    m.classList.remove("hidden");
+    setTimeout(() => m.firstElementChild.classList.remove("scale-95"), 10);
+}
+
+function closeModalTim() {
+    const m = document.getElementById("modal-tim");
+    m.firstElementChild.classList.add("scale-95");
+    setTimeout(() => m.classList.add("hidden"), 150);
+}
+
+function editTim(idx) {
+    const t = appState.tim[idx];
+    if (!t) return;
+
+    document.getElementById("modal-tim-title").innerText = "Ubah Detail Tim";
+    document.getElementById("tim-form-index").value = idx;
+    document.getElementById("tim-form-nama").value = t.nama;
+    document.getElementById("tim-form-username").value = t.username;
+    document.getElementById("tim-form-password").value = t.password || "••••••••";
+    document.getElementById("tim-form-role").value = t.role;
+    window.toggleAccessPermissions(t.role);
+
+    // Apply Checkboxes according to permissions stored
+    document.querySelectorAll('input[name="perm"]').forEach(cb => {
+        cb.checked = t.permissions ? t.permissions.includes(cb.value) : false;
+    });
+
+    const m = document.getElementById("modal-tim");
+    m.classList.remove("hidden");
+    setTimeout(() => m.firstElementChild.classList.remove("scale-95"), 10);
+}
+
+function submitFormTim(e) {
+    e.preventDefault();
+    const idx = document.getElementById("tim-form-index").value;
+    const nama = document.getElementById("tim-form-nama").value;
+    const u = document.getElementById("tim-form-username").value;
+    const p = document.getElementById("tim-form-password").value;
+    const r = document.getElementById("tim-form-role").value;
+
+    // Collect permissions from checked inputs
+    const checkedPerms = Array.from(document.querySelectorAll('input[name="perm"]:checked')).map(cb => cb.value);
+
+    showLoading("Menyimpan kru...", 40);
+    setTimeout(() => {
+        const itemData = { nama, username: u, password: p, role: r, permissions: checkedPerms };
+        
+        if (idx !== "") {
+            appState.tim[parseInt(idx)] = itemData;
+            // Update currently active logged-in profile if updated self
+            if (currentUser && currentUser.username === u) {
+                currentUser = itemData;
+            }
+        } else {
+            appState.tim.push(itemData);
+        }
+        
+        hideLoading();
+        closeModalTim();
+        saveStateToLocalStorage();
+        renderAppFromState();
+        applySimulatedUserPermissions();
+        showCustomAlert("Tersimpan", "Informasi tim pelaksana berhasil diperbarui.", "success");
+    }, 600);
+}
+
+function deleteTim(idx) {
+    const targetUser = appState.tim[idx];
+    if (targetUser && targetUser.username === "admin") {
+        showCustomAlert("Aksi Terlarang", "Admin utama wilayah tidak boleh dihapus.", "danger");
+        return;
+    }
+
+    showCustomConfirm("Hapus Kru", "Yakin ingin menghapus hak akses personil ini dari tim pelaksana?", (yes) => {
+        if (!yes) return;
+        
+        if (currentUser && currentUser.username === targetUser.username) {
+            currentUser = appState.tim[0]; // Rollback to main admin
+        }
+        
+        appState.tim.splice(idx, 1);
+        saveStateToLocalStorage();
+        renderAppFromState();
+        applySimulatedUserPermissions();
+        showCustomAlert("Terhapus", "Personil kru telah dihapus.", "success");
+    });
+}
+
+// ------------------------- KUSTOMISASI BRANDING -------------------------
 function saveBranding(e) {
     e.preventDefault();
     const appName = document.getElementById("setting-app-name").value;
     const organisasi = document.getElementById("setting-organisasi").value;
     const cabang = document.getElementById("setting-cabang").value;
     const totalSesi = parseInt(document.getElementById("setting-total-sesi").value) || 10;
+    const logo = document.getElementById("setting-logo").value;
     const themeColor = document.getElementById("setting-theme-color").value;
-    
-    // Pertahankan logo yang ada jika tidak mengunggah logo baru
-    const logo = tempUploadedLogo || appState.branding.logo;
 
     showLoading("Menyimpan setelan kustomisasi...", 50);
     setTimeout(() => {
         appState.branding = { appName, organisasi, cabang, totalSesi, logo, themeColor: themeColor };
-        
-        // Reset elemen input file setelah berhasil disimpan
-        tempUploadedLogo = null;
-        document.getElementById("setting-logo-file").value = "";
-        document.getElementById("setting-logo-file-name").innerText = "Belum ada logo diunggah";
-        document.getElementById("setting-logo-file-name").className = "text-[9px] text-slate-400 font-medium truncate";
-        
         hideLoading();
         saveStateToLocalStorage();
         renderAppFromState();
